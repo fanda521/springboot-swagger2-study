@@ -1,5 +1,6 @@
 package com.wang.springbootswagger2.controller;
 
+import com.wang.springbootswagger2.anno.StudentAnno;
 import com.wang.springbootswagger2.entity.Student;
 import com.wang.springbootswagger2.result.ResponseResult;
 import io.swagger.annotations.Api;
@@ -55,6 +56,7 @@ public class StudentController {
             "“birthday\":\"1996-05-30”\n" +
             "\n" +
             "}")
+    @StudentAnno("aa")
     public ResponseResult updateStudentById(@RequestBody Student student) {
         return ResponseResult.ok(student);
     }

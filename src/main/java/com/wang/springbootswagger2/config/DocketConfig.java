@@ -1,5 +1,7 @@
 package com.wang.springbootswagger2.config;
 
+import com.google.common.base.Predicates;
+import com.wang.springbootswagger2.anno.StudentAnno;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,8 +26,19 @@ public class DocketConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .select()
+                /*.apis(
+                        Predicates.and(
+                                RequestHandlerSelectors.withMethodAnnotation(StudentAnno.class)
+                        )
+                )*///方法上有自定义的注解才生成api文档
                 .apis(RequestHandlerSelectors.basePackage("com.wang.springbootswagger2"))
-                .paths(PathSelectors.any())
+                //.paths(PathSelectors.any())
+                .paths(
+                        Predicates.or(
+                                PathSelectors.regex("/student/get.*"),
+                                PathSelectors.regex("/student/add.*")
+                        )
+                )
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("SpringBoot整合Swagger")
                         .description("SpringBoot整合Swagger，详细信息......")
